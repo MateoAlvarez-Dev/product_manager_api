@@ -1,18 +1,13 @@
-const express = require('express');
-const pathLib = require('path');
+const express = require("express");
+const pathLib = require("path");
 const router = express.Router();
-const { ProductManager } = require('./../models/products');
+const { ProductManager } = require("./../models/products");
 const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
 
-
-router.get('/realtimeproducts', (req, res) => {
-
-    res.render("index", {
-        title: "HOLA",
-        products: productManager.getProducts()
-    });
+router.get("/", (req, res) => {
+  res.render("index", {
+    products: productManager.getProducts(),
+  });
 });
-
-
 
 module.exports = router;
