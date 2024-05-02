@@ -9,65 +9,66 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/static/css/index.css" />
   </head>
-  <body style="padding: 10px;">
+  <body>
 
-    <form style="width: 300px;" id="product_form" onsubmit="sendForm(event)">
-      <div class="form-group">
-        <label for="exampleInputEmail1">Title</label>
-        <input type="text" name="title" class="form-control" placeholder="Product Title" />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Price</label>
-        <input type="text" name="price" class="form-control" placeholder="price" />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Stock</label>
-        <input type="text" name="stock" class="form-control" placeholder="stock" />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Category</label>
-        <input type="text" name="category" class="form-control" placeholder="category" />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Thumbnail</label>
-        <input type="text" name="thumbnail" class="form-control" placeholder="thumbnail" />
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Description</label>
-        <textarea class="form-control" name="description" rows="3"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <div class="main-container">
+      <form id="product_form" onsubmit="sendForm(event)">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Title</label>
+          <input type="text" name="title" class="form-control" placeholder="Product Title" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Price</label>
+          <input type="text" name="price" class="form-control" placeholder="price" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Stock</label>
+          <input type="text" name="stock" class="form-control" placeholder="stock" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Category</label>
+          <input type="text" name="category" class="form-control" placeholder="category" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Thumbnail</label>
+          <input type="text" name="thumbnail" class="form-control" placeholder="thumbnail" />
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Description</label>
+          <textarea class="form-control" name="description" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
 
-    <div style="height: 30px; width: 100%;"></div>
-
-    <table>
-      <thead>
-        <tr>
-          <td>Titulo</td>
-          <td>Descripcion</td>
-          <td>Precio</td>
-          <td>Cantidad Stock</td>
-          <td>Categoria</td>
-          <td>Status</td>
-        </tr>
-      </thead>
-      <tbody id="product_list">
-        {{#each products}}
-
+      <table>
+        <thead>
           <tr>
-            <td>{{title}}</td>
-            <td>{{description}}</td>
-            <td>{{price}}</td>
-            <td>{{stock}}</td>
-            <td>{{category}}</td>
-            <td>{{status}}</td>
+            <td>Titulo</td>
+            <td>Descripcion</td>
+            <td>Precio</td>
+            <td>Cantidad Stock</td>
+            <td>Categoria</td>
+            <td>Status</td>
           </tr>
+        </thead>
+        <tbody id="product_list">
+          {{#each products}}
 
-        {{/each}}
-      </tbody>
-    </table>
+            <tr>
+              <td>{{title}}</td>
+              <td>{{description}}</td>
+              <td>{{price}}</td>
+              <td>{{stock}}</td>
+              <td>{{category}}</td>
+              <td>{{status}}</td>
+            </tr>
+
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/static/js/index.js"></script>
