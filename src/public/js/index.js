@@ -25,7 +25,7 @@ socket.on("get_products", (products) => {
     <tr>
       <td>${title}</td>
       <td>${description}</td>
-      <td>${price}</td>
+      <td>$${price}</td>
       <td>${stock}</td>
       <td>${category}</td>
       <td>${status}</td>
