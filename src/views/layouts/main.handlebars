@@ -46,24 +46,28 @@
       <table>
         <thead>
           <tr>
+            <td><b>Code</b></td>
             <td><b>Titulo</b></td>
             <td><b>Descripcion</b></td>
             <td><b>Precio</b></td>
             <td><b>Cantidad Stock</b></td>
             <td><b>Categoria</b></td>
             <td><b>Status</b></td>
+            <td><b>Actions</b></td>
           </tr>
         </thead>
         <tbody id="product_list">
           {{#each products}}
 
             <tr>
+              <td>{{code}}</td>
               <td>{{title}}</td>
               <td>{{description}}</td>
               <td>${{price}}</td>
               <td>{{stock}}</td>
               <td>{{category}}</td>
               <td>{{status}}</td>
+              <td><button class="btn btn-danger" data-product-code="{{code}}" onclick="deleteProduct(event)">Delete</button></td>
             </tr>
 
           {{/each}}
