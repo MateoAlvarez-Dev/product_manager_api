@@ -41,3 +41,14 @@ socket.on("get_products", (products) => {
   });
   productListElement.innerHTML = productList;
 });
+
+// TESTING
+
+function autoFill() {
+  let vals = ["Example", 9999, 15, "Auto Fill", "https://example.com", "This is an example"];
+  let fields = ["title", "price", "stock", "category", "thumbnail", "description"];
+
+  fields.forEach((field, index) => {
+    form[field].value = vals[index];
+  });
+}

@@ -14,8 +14,9 @@
   <body>
 
     <div class="main-container">
-      <form id="product_form" onsubmit="sendForm(event)">
+      <form id="product_form" action="#" onsubmit="sendForm(event)">
         <h2>Creacion de productos</h2>
+        <h6>En tiempo real</h6>
         <div class="form-group">
           <label for="exampleInputEmail1">Title</label>
           <input type="text" name="title" class="form-control" placeholder="Product Title" />
@@ -40,7 +41,8 @@
           <label for="exampleFormControlTextarea1">Description</label>
           <textarea class="form-control" name="description" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="autoFill()">Auto Fill</button>
       </form>
 
       <table>
@@ -67,7 +69,11 @@
               <td>{{stock}}</td>
               <td>{{category}}</td>
               <td>{{status}}</td>
-              <td><button class="btn btn-danger" data-product-code="{{code}}" onclick="deleteProduct(event)">Delete</button></td>
+              <td><button
+                  class="btn btn-danger"
+                  data-product-code="{{code}}"
+                  onclick="deleteProduct(event)"
+                >Delete</button></td>
             </tr>
 
           {{/each}}
