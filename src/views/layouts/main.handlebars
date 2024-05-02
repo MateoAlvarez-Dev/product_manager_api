@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Titulo</td>
+                <td>Descripcion</td>
+                <td>Precio</td>
+                <td>Cantidad Stock</td>
+                <td>Categoria</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                
+                <tr>
+                    <td>{{title}}</td>
+                    <td>{{description}}</td>
+                    <td>{{price}}</td>
+                    <td>{{stock}}</td>
+                    <td>{{category}}</td>
+                    <td>{{status}}</td>
+                </tr>
+
+            {{/each}}
+        </tbody>
+    </table>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/index.js"></script>
+</body>
+</html>

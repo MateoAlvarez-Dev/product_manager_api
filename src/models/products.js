@@ -1,25 +1,9 @@
-const pathLib = require('path');
 const fs = require('fs');
-
-
-class Product{
-    constructor(title, description, price, thumbnail, stock){
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.thumbnail = thumbnail;
-        this.stock = stock;
-        this.code;
-    }
-
-    setCode(productArray){
-        this.code = productArray.length + 1;
-    }
-}
+const Product = require('./../entity/products');
 
 class ProductManager{
-    constructor(){
-        this.path = pathLib.join("./", "db", "persistence.json");
+    constructor(path){
+        this.path = path;
     }
 
     getProducts(){
@@ -29,25 +13,27 @@ class ProductManager{
     getProductByCode(code){
         let products = this.getProducts();
         let findProduct = products.findIndex(el => el.code === code);
-        return (findProduct >= 0) ? products[findProduct] : { error: "Not Found" };
+        return (findProduct >= 0) ? products[findProduct] : null;
     }
 
-    addProduct(product){
+    addProduct(data){
+        let product = new Product(data);
         let products = this.getProducts();
         let validationError = this.validateFields(product);
 
         if(validationError !== ""){
-            console.log(`ERROR -> ${validationError}`);
+            return null;
         }else{
             product.setCode(products);
             products.push(product);
             this.saveProducts(products);
-            console.log("Product Added");
+            return product;
         }
 
     }
 
-    updateProduct(id, newProduct){
+    updateProduct(id, data){
+        let newProduct = new Product(data);
         let products = this.getProducts();
         let findProduct = products.findIndex(p => p.code === id);
         
