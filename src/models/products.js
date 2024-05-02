@@ -55,15 +55,14 @@ class ProductManager{
         let findProduct = products.findIndex(p => p.code === id);
 
         if(findProduct < 0){
-            console.log("Product not found.");
-            return;
+            return false;
         }
 
         products.splice(findProduct, 1);
 
         this.saveProducts(products);
 
-        console.log("Product Deleted.");
+        return true;
     }
 
     saveProducts(products){

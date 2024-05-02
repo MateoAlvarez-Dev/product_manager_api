@@ -46,9 +46,10 @@ router.put('/:pid', checkProductExistance, (req, res) => {
 
 router.delete('/:pid', checkProductExistance, (req, res) => {
     let productId = Number(req.params.pid);
-
-    productManager.deleteProduct(productId);
-    res.status(200).json({ data: "Product Deleted" })
+    let isDeleted = productManager.deleteProduct(productId);
+    
+    if(isDeleted) res.status(200).json({ data: "Product Deleted" });
+    else res.status(400).json({ error: "Product not Deleted" });
 });
 
 
