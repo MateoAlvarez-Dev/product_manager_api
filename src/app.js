@@ -5,8 +5,10 @@ const { Server } = require('socket.io');
 
 const app = express();
 const port = 5510;
+
 const productRoutes = require('./routes/product.routes');
 const viewRoutes = require('./routes/views.routes');
+const realTimeRoutes = require('./services/realTime');
 
 app.use(
   bodyParser.urlencoded({
@@ -34,6 +36,4 @@ const httpServer = app.listen(port, () => {
 
 const socketServer = new Server(httpServer);
 
-socketServer.on('connection', (socket) => {
-  console.log("New Client Connected")
-})
+socketServer.on("connection", (socket) => realTimeRoutes(socket, socketServer));

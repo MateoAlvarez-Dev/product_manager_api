@@ -22,7 +22,7 @@ class ProductManager{
         let validationError = this.validateFields(product);
 
         if(validationError !== ""){
-            return null;
+            return false;
         }else{
             product.setCode(products);
             products.push(product);
@@ -38,8 +38,7 @@ class ProductManager{
         let findProduct = products.findIndex(p => p.code === id);
         
         if(findProduct < 0){ 
-            console.log("Product not found");
-            return;
+            return false;
         }
 
         newProduct.setCode(id);
@@ -47,7 +46,9 @@ class ProductManager{
 
         this.saveProducts(products);
 
-        console.log("Product Updated.");
+      console.log("Product Updated.");
+      
+      return true;
     }
 
     deleteProduct(id){
