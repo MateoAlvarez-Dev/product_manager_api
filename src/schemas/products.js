@@ -1,6 +1,4 @@
-/**
- * @deprecated this Object will be deleted soon. Will be replaced by Mongoose Schemas
- */
+
 class Product{
     constructor({title, description, price, stock, category, thumbnail, status = true}){
         this.title = title;

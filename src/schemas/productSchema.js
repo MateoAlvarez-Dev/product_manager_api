@@ -9,6 +9,8 @@ const productSchema = new Schema({
     category: String,
     thumbnail_url: String,
     isActive: Boolean
+}, {
+    collection: 'products' // Especificar la colección
 });
 
 module.exports = productSchema;

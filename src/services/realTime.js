@@ -1,9 +1,9 @@
-const { ProductManager, Product } = require("./../models/products");
-const pathLib = require("path");
-const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
+//const { ProductManager, Product } = require("./../models/products");
+//const pathLib = require("path");
+//const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
 
 module.exports = function (socket, socketServer) {
-  socket.on("new_product", (product) => {
+  /*socket.on("new_product", (product) => {
     const productObject = new Product(product);
     const isCreated = productManager.addProduct(productObject);
     if (isCreated) socketServer.emit("get_products", productManager.getProducts());
@@ -18,5 +18,5 @@ module.exports = function (socket, socketServer) {
     const productObject = new Product(product);
     const isUpdated = productManager.updateProduct(productId, productObject);
     if (isUpdated) socketServer.emit("get_products", productManager.getProducts());
-  });
+  });*/
 };

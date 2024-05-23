@@ -1,55 +1,67 @@
 const express = require('express');
-const pathLib = require('path');
 const router = express.Router();
-const { ProductManager } = require('./../models/products');
-const checkProductExistance = require('../middlewares/checkProductExistance');
-const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
+//const { ProductManager } = require('./../models/products');
+//const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
 
+const checkProductExistance = require('../middlewares/checkProductExistance');
+const Product = require('./../dao/models/productModel');
 
 router.get('/', (req, res) => {
-    let products = productManager.getProducts();
-
-    if(req.query.limit){
-        return res.json(products.slice(0, Number(req.query.limit)));
-    }
-
-    res.json(products);
-
+    Product.find().then((products) => {
+        res.status(200).json(products);
+    }).catch((e) => {
+        console.error('Error while finding the products', e);
+        res.status(500).send('Internal Error');
+    })
 });
 
 
-router.get('/:pid', checkProductExistance, (req, res) => {
-    let product = productManager.getProductByCode(Number(req.params.pid));
-    res.json(product);
+router.get('/:id', checkProductExistance, (req, res) => {
+    const { id } = req.params;
+
+    Product.findById(id).then((product) => {
+        if(product === null){
+            res.status(404).send("Not found")
+            return;
+        }
+        res.status(200).json(product);
+    }).catch((e) => {
+        console.error('Error while finding the products', e);
+        res.status(500).send('Internal Error');
+    });
+
 });
 
 
 router.post('/', (req, res) => {
-    console.log(req.body);
-    let productCreated = productManager.addProduct(req.body);
-    if(productCreated){
-        res.status(200).send({ data: "Product Created" });
-        console.log("Product Ready: ", productCreated);
-    }else{
-        res.status(400).send({ error: "Not Created" });
-    }
+    
+    // MONGO
+    let newProduct = new Product(req.body);
+
+    newProduct.save().then((savedProduct) => {
+        res.status(201).send('Product created');
+    }).catch((e) => {
+        console.error('Error while saving the product', e);
+        res.status(500).send('Internal Error');
+    });
+
 });
 
 
 router.put('/:pid', checkProductExistance, (req, res) => {
-    let productId = Number(req.params.pid);
+    /*let productId = Number(req.params.pid);
 
     productManager.updateProduct(productId, req.body);
-    res.status(200).json({ data: "Product Updated" });
+    res.status(200).json({ data: "Product Updated" });*/
 });
 
 
 router.delete('/:pid', checkProductExistance, (req, res) => {
-    let productId = Number(req.params.pid);
+    /*let productId = Number(req.params.pid);
     let isDeleted = productManager.deleteProduct(productId);
     
     if(isDeleted) res.status(200).json({ data: "Product Deleted" });
-    else res.status(400).json({ error: "Product not Deleted" });
+    else res.status(400).json({ error: "Product not Deleted" });*/
 });
 
 
