@@ -1,6 +1,9 @@
 const fs = require('fs');
-const Product = require('./../entity/products');
+const Product = require('../schemas/products');
 
+/**
+ * @deprecated this functionality will be deleted soon. Will be replaced by Mongoose Models
+ */
 class ProductManager{
     constructor(path){
         this.path = path;

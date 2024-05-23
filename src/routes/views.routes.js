@@ -5,7 +5,7 @@ const { ProductManager } = require("./../models/products");
 const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
 
 router.get("/", (req, res) => {
-  res.render("index", {
+  res.render("home", {
     products: productManager.getProducts(),
   });
 });

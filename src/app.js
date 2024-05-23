@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const { Server } = require('socket.io');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 5510;
@@ -9,6 +10,12 @@ const port = 5510;
 const productRoutes = require('./routes/product.routes');
 const viewRoutes = require('./routes/views.routes');
 const realTimeRoutes = require('./services/realTime');
+
+mongoose.connect('mongodb://localhost:27017/e_commerce', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Conexión exitosa a la base de datos'))
+  .catch(err => console.error('Hubo un error conectando con la base de datos... ', err));
 
 app.use(
   bodyParser.urlencoded({
