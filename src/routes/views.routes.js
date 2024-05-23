@@ -1,16 +1,20 @@
 const express = require("express");
-const pathLib = require("path");
 const router = express.Router();
-//const { ProductManager } = require("./../models/products");
-//const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
+
+const Product = require('./../dao/models/productModel');
 
 router.get("/", (req, res) => {
-  /*res.render("home", {
-    products: productManager.getProducts(),
-  });*/
+  Product.find().then((products) => {
+    res.render("main", { layout: 'home', products: JSON.parse(JSON.stringify(products)) });
+  }).catch((e) => {
+
+    console.error('Error while finding the products', e);
+    res.send('Cannot load the product data...');
+
+  })
 });
 
-router.get("/", (req, res) => {
+router.get("/realTime", (req, res) => {
   /*res.render("realtime", {
     products: productManager.getProducts(),
   });*/

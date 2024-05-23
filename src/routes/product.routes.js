@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-//const { ProductManager } = require('./../models/products');
-//const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
 
-const checkProductExistance = require('../middlewares/checkProductExistance');
+const validateProductData = require('../middlewares/validateProductData');
 const Product = require('./../dao/models/productModel');
 
 router.get('/', (req, res) => {
@@ -16,7 +14,7 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/:id', checkProductExistance, (req, res) => {
+router.get('/:id', validateProductData, (req, res) => {
     const { id } = req.params;
 
     Product.findById(id).then((product) => {
@@ -26,7 +24,7 @@ router.get('/:id', checkProductExistance, (req, res) => {
         }
         res.status(200).json(product);
     }).catch((e) => {
-        console.error('Error while finding the products', e);
+        console.error('Error while finding the product', e);
         res.status(500).send('Internal Error');
     });
 
@@ -48,20 +46,36 @@ router.post('/', (req, res) => {
 });
 
 
-router.put('/:pid', checkProductExistance, (req, res) => {
-    /*let productId = Number(req.params.pid);
+router.put('/:id', validateProductData, (req, res) => {
+    const { id } = req.params;
 
-    productManager.updateProduct(productId, req.body);
-    res.status(200).json({ data: "Product Updated" });*/
+    Product.findByIdAndUpdate(id, req.body, { new: true }).then((updatedProduct) => {
+        if(updatedProduct === null){
+            res.status(404).send("Not found");
+            return;
+        }
+        res.status(200).send('Product updated');
+    }).catch((e) => {
+        console.error('Error while updating the product', e);
+        res.status(500).send('Internal Error');
+    });
+
 });
 
 
-router.delete('/:pid', checkProductExistance, (req, res) => {
-    /*let productId = Number(req.params.pid);
-    let isDeleted = productManager.deleteProduct(productId);
+router.delete('/:id', validateProductData, (req, res) => {
+    const { id } = req.params;
     
-    if(isDeleted) res.status(200).json({ data: "Product Deleted" });
-    else res.status(400).json({ error: "Product not Deleted" });*/
+    Product.findByIdAndDelete(id).then((productDeleted) => {
+        if(productDeleted === null){
+            res.status(404).send("Not found");
+            return;
+        }
+        res.status(201).send('Product deleted');
+    }).catch((e) => {
+        console.error('Error while deleting the product', e);
+        res.status(500).send('Internal Error');
+    });
 });
 
 
