@@ -12,30 +12,30 @@ function sendForm(ev) {
     category: category.value,
     thumbnail: thumbnail.value,
     description: description.value,
-    status: true,
+    isActive: true,
   });
 }
 
 function deleteProduct(ev) {
   let productCode = ev.target.getAttribute("data-product-code");
-  socket.emit("delete_product", Number(productCode));
+  socket.emit("delete_product", productCode);
 }
 
 // SOCKET EVENTS
 
 socket.on("get_products", (products) => {
   let productList = "";
-  products.forEach(({ title, description, price, stock, category, status, code }) => {
+  products.forEach(({ title, description, price, stock, category, isActive, _id }) => {
     productList += `
     <tr>
-      <td>${code}</td>
+      <td>${_id}</td>
       <td>${title}</td>
       <td>${description}</td>
       <td>$${price}</td>
       <td>${stock}</td>
       <td>${category}</td>
-      <td>${status}</td>
-      <td><button class="btn btn-danger" data-product-code="${code}" onclick="deleteProduct(event)">Delete</button></td>
+      <td>${isActive}</td>
+      <td><button class="btn btn-danger" data-product-code="${_id}" onclick="deleteProduct(event)">Delete</button></td>
     </tr>
     `;
   });

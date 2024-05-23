@@ -15,9 +15,14 @@ router.get("/", (req, res) => {
 });
 
 router.get("/realTime", (req, res) => {
-  /*res.render("realtime", {
-    products: productManager.getProducts(),
-  });*/
+  Product.find().then((products) => {
+    res.render("main", { layout: 'realtime', products: JSON.parse(JSON.stringify(products)) });
+  }).catch((e) => {
+
+    console.error('Error while finding the products', e);
+    res.send('Cannot load the product data...');
+
+  })
 });
 
 module.exports = router;

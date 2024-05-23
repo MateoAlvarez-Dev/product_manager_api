@@ -1,22 +1,49 @@
-//const { ProductManager, Product } = require("./../models/products");
-//const pathLib = require("path");
-//const productManager = new ProductManager(pathLib.join(__dirname, "..", "db", "persistence.json"));
+const Product = require('./../dao/models/productModel');
+
+function sendAllProducts(socketServer){
+  Product.find().then((products) => {
+    socketServer.emit("get_products", JSON.parse(JSON.stringify(products)));
+  }).catch((e) => {
+    console.log("Failed to show the products in real time...", e);
+  })
+}
 
 module.exports = function (socket, socketServer) {
-  /*socket.on("new_product", (product) => {
-    const productObject = new Product(product);
-    const isCreated = productManager.addProduct(productObject);
-    if (isCreated) socketServer.emit("get_products", productManager.getProducts());
+
+  socket.on("new_product", (product) => {
+    
+    let newProduct = new Product(product);
+
+    newProduct.save().then((savedProduct) => {
+        sendAllProducts(socketServer);
+    }).catch((e) => {
+        console.log("Failed to save the product in real time...", e);
+    });
+
   });
 
   socket.on("delete_product", (productId) => {
-    const isDeleted = productManager.deleteProduct(productId);
-    if (isDeleted) socketServer.emit("get_products", productManager.getProducts());
+    Product.findByIdAndDelete(productId).then((productDeleted) => {
+        if(productDeleted === null){
+            console.log("Product not found ");
+            return;
+        }
+        sendAllProducts(socketServer);
+    }).catch((e) => {
+        console.log("Failed to delete the product in real time...", e);
+    });
   });
 
   socket.on("update_product", (productId, product) => {
-    const productObject = new Product(product);
-    const isUpdated = productManager.updateProduct(productId, productObject);
-    if (isUpdated) socketServer.emit("get_products", productManager.getProducts());
-  });*/
+    Product.findByIdAndUpdate(productId, product, { new: true }).then((updatedProduct) => {
+        if(updatedProduct === null){
+            console.log("Product not found");
+            return;
+        }
+        sendAllProducts(socketServer);
+    }).catch((e) => {
+        console.log("Failed to update the product in real time...", e);
+    });
+  });
+
 };

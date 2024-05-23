@@ -62,16 +62,16 @@
           {{#each products}}
 
             <tr>
-              <td>{{code}}</td>
+              <td>{{_id}}</td>
               <td>{{title}}</td>
               <td>{{description}}</td>
               <td>${{price}}</td>
               <td>{{stock}}</td>
               <td>{{category}}</td>
-              <td>{{status}}</td>
+              <td>{{isActive}}</td>
               <td><button
                   class="btn btn-danger"
-                  data-product-code="{{code}}"
+                  data-product-code="{{_id}}"
                   onclick="deleteProduct(event)"
                 >Delete</button></td>
             </tr>
