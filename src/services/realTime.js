@@ -1,6 +1,8 @@
 const Product = require('./../dao/models/productModel');
 const Message = require('./../dao/models/messageModel');
 
+const moment = require('moment');
+
 
 function sendAllProducts(socketServer){
   Product.find().then((products) => {
@@ -13,8 +15,27 @@ function sendAllProducts(socketServer){
 module.exports = function (socket, socketServer) {
 
   socket.on("message", (messageObj) => {
-    socket.broadcast.emit("message", messageObj);
+    let actualTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+    messageObj.time = actualTime;
+    let newMessage = new Message(messageObj);
+
+    newMessage.save().then((savedMessage) => {
+      socket.broadcast.emit("message", messageObj);
+    }).catch((e) => {
+      console.log("An error has been ocurred while saving the message", e);
+      socket.emit("message", { user: 'Server', message: 'Error while sending the message...', time: actualTime });
+    })
+    
   });
+
+  socket.on("get_messages", () => {
+    Message.find({}).then((messages) => {
+      socket.emit("get_messages", JSON.parse(JSON.stringify(messages)));
+    }).catch((e) => {
+      console.log("An error has ocurred while obtaining the messages...", e);
+      socket.emit("get_messages", [{ user: 'Server', message: 'Error while getting the messages...', time: actualTime }])
+    });
+  })
 
 
   // PRODUCT REAL TIME

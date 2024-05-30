@@ -4,7 +4,8 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const messageSchema = new Schema({
     user: String,
-    message: String
+    message: String,
+    time: String
 }, {
     collection: 'messages' // Especificar la colección
 });

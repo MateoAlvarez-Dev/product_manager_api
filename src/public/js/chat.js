@@ -3,7 +3,7 @@ const messageContainer = document.querySelector(".chat-box");
 
 function sendMessage(ev) {
     if(ev.code !== 'Enter') return;
-    let messageObj = { user: 'testing', message: ev.target.value };
+    let messageObj = { user: 'Testing', message: ev.target.value };
     socket.emit("message", messageObj);
     createMessageBox("sent", messageObj);
 }
@@ -17,6 +17,7 @@ function createMessageBox(type, messageObj){
     messageBox.classList.add("message", type);
 
     message.textContent = messageObj.message;
+    messageTime.textContent = messageObj.time;
 
     messageBox.append(message, messageTime);
     messageContainer.appendChild(messageBox);
@@ -25,3 +26,9 @@ function createMessageBox(type, messageObj){
 // SOCKET EVENTS
 
 socket.on("message", (messageObj) => createMessageBox("received", messageObj));
+
+socket.on("get_messages", (messages) => messages.forEach(message => createMessageBox("received", message)));
+
+window.onload = () => {
+    socket.emit("get_messages");
+}
