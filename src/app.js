@@ -8,6 +8,8 @@ const app = express();
 const port = 5510;
 
 const productRoutes = require('./routes/product.routes');
+const cartRoutes = require('./routes/cart.routes');
+const chatRoutes = require('./routes/chat.routes');
 const viewRoutes = require('./routes/views.routes');
 const realTimeRoutes = require('./services/realTime');
 
@@ -26,9 +28,10 @@ app.set('views', __dirname + '/views');
 
 
 app.use(viewRoutes);
+app.use(chatRoutes);
 
 app.use('/api/products', productRoutes);
-app.use('/api/carts', productRoutes);
+app.use('/api/carts', cartRoutes);
 
 
 const httpServer = app.listen(port, () => {
