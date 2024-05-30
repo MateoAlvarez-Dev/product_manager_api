@@ -22,9 +22,12 @@
             </div>
         </div>
         <div class="chat-input">
-            <input type="text" placeholder="Type your message here...">
+            <input type="text" placeholder="Type your message here..." onkeydown="sendMessage(event)">
             <button>Send</button>
         </div>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/chat.js"></script>
 </body>
 </html>

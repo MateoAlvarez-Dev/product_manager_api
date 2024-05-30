@@ -10,6 +10,13 @@ function sendAllProducts(socketServer){
 
 module.exports = function (socket, socketServer) {
 
+  socket.on("message", (messageObj) => {
+    socket.broadcast.emit("message", messageObj);
+  });
+
+
+  // PRODUCT REAL TIME
+
   socket.on("new_product", (product) => {
     
     let newProduct = new Product(product);
