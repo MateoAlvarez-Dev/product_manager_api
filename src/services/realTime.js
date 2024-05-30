@@ -1,4 +1,6 @@
 const Product = require('./../dao/models/productModel');
+const Message = require('./../dao/models/messageModel');
+
 
 function sendAllProducts(socketServer){
   Product.find().then((products) => {
