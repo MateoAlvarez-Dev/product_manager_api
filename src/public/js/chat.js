@@ -3,9 +3,11 @@ const messageContainer = document.querySelector(".chat-box");
 
 function sendMessage(ev) {
     if(ev.code !== 'Enter') return;
+    if(ev.target.value == "") return;
     let messageObj = { user: 'Testing', message: ev.target.value };
     socket.emit("message", messageObj);
     createMessageBox("sent", messageObj);
+    ev.target.value = "";
 }
 
 function createMessageBox(type, messageObj){
